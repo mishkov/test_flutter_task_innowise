@@ -6,7 +6,11 @@ import 'day_forecast.dart';
 import 'timed_temperature.dart';
 
 class FiveDayForecastCubit extends Cubit<List<DayForecast>> {
-  FiveDayForecastCubit() : super(List<DayForecast>.empty()) {
+  static final _fiveDayForecastCubit = FiveDayForecastCubit._internal();
+
+  factory FiveDayForecastCubit() => _fiveDayForecastCubit;
+
+  FiveDayForecastCubit._internal() : super(List<DayForecast>.empty()) {
     _getFiveDayForecast().then((fiveDayForecast) => emit(fiveDayForecast));
   }
 
