@@ -29,6 +29,15 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   String _title = 'Loading';
   final String _apiKey = '18b9ecf9d78ff455db52c01518efa59e';
+  final _week = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +49,20 @@ class _MainPageState extends State<MainPage> {
         future: _getfiveDayForecast(),
         builder: (_, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return Container();
+            return ListView.builder(itemBuilder: (listBuildContext, index) {
+              var dayName;
+              final date = snapshot.data![index].date!;
+              final weekday = date.weekday;
+              if (weekday == 1) {
+                dayName = 'Today';
+              } else {
+                dayName = _week[weekday];
+              }
+              return DayWeather(
+                dayName,
+                _getDayTemperatures(snapshot.data!, day: date.day),
+              );
+            });
           } else if (snapshot.hasError) {
             final error = snapshot.error;
             if (error != null) {
@@ -98,6 +120,21 @@ class _MainPageState extends State<MainPage> {
     if (permissionGranted == PermissionStatus.denied) {
       permissionGranted = await location.requestPermission();
     }
+  }
+
+  Map<String, Temperature> _getDayTemperatures(List<Weather> weathers,
+      {required int day}) {
+    var temperatures = Map<String, Temperature>();
+    for (var weather in weathers) {
+      if (weather.date!.day == day) {
+        final time = '${weather.date!.hour}:${weather.date!.minute}';
+        temperatures[time] = weather.temperature!;
+      } else {
+        break;
+      }
+    }
+
+    return temperatures;
   }
 }
 
