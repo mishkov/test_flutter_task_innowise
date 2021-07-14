@@ -1,8 +1,8 @@
 import 'package:test_flutter_task_innowise/timed_temperature.dart';
 
-class DayWeather {
+class DayForecast {
   final String dayName;
   final List<TimedTemperature> temperatures;
 
-  DayWeather(this.dayName, this.temperatures);
+  DayForecast(this.dayName, this.temperatures);
 }
