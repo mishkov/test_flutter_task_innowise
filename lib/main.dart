@@ -60,7 +60,7 @@ class MainPage extends StatelessWidget {
       floatingActionButton: ElevatedButton(
         onPressed: () async {
           final forecast = FiveDayForecastFormattedCubit();
-          final dayForecast = FiveDayForecastFormattedCubit().state.first;
+          final dayForecast = forecast.state.first;
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) {
