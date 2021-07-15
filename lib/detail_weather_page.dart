@@ -31,6 +31,14 @@ class DetailWeatherPage extends StatelessWidget {
           Image.network(
             iconUrl,
             scale: 0.2,
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) {
+                return child;
+              }
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            },
           ),
           Text(
             '${weather.areaName}, ${weather.country}',
