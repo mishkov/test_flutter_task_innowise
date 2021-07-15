@@ -31,7 +31,6 @@ dependencies:
   location: ^4.3.0
   weather: ^2.0.1
   flutter_bloc: ^7.0.1
-  geocoding: ^2.0.0
 
 dev_dependencies:
   flutter_test:
