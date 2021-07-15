@@ -5,8 +5,8 @@ import 'package:weather/weather.dart';
 
 import 'timed_weather.dart';
 
-class FiveDayForeCastFormattedCubit extends Cubit<List<DayForecast>> {
-  FiveDayForeCastFormattedCubit() : super(List<DayForecast>.empty()) {
+class FiveDayForecastFormattedCubit extends Cubit<List<DayForecast>> {
+  FiveDayForecastFormattedCubit() : super(List<DayForecast>.empty()) {
     FiveDayForecastCubit().stream.listen(_forecastListener);
   }
 
@@ -18,32 +18,29 @@ class FiveDayForeCastFormattedCubit extends Cubit<List<DayForecast>> {
   }
 
   List<DayForecast> _getFormattedForecast(List<Weather> forecast) {
-    List<DayForecast> fiveDayForecast = [];
-
-    List<TimedWeather> timedWeathers = [];
-    const unsetValue = 0;
-    var currentDay = unsetValue;
-    for (final weather in forecast) {
-      final date = weather.date!;
-      final nextDay = date.day;
-      if (currentDay < nextDay) {
-        if (currentDay != unsetValue) {
-          final dayName = _getDayName(date);
-          final dayForeCast = DayForecast(dayName, timedWeathers);
-          fiveDayForecast.add(dayForeCast);
-
-          timedWeathers.clear();
-        }
-        currentDay = nextDay;
+    var days = [];
+    forecast.forEach((weather) {
+      final day = weather.date!.day;
+      if (!days.contains(day)) {
+        days.add(day);
       }
-      final time = '${date.hour}:${date.minute}';
-      final timedTemperature = TimedWeather(time, weather);
-      timedWeathers.add(timedTemperature);
-    }
-    final date = forecast.last.date!;
-    final dayName = _getDayName(date);
-    final dayForeCast = DayForecast(dayName, timedWeathers);
-    fiveDayForecast.add(dayForeCast);
+    });
+
+    List<DayForecast> fiveDayForecast = [];
+    days.forEach((day) {
+      final daysWeather = forecast.where((weather) {
+        return weather.date!.day == day;
+      });
+      var timedWeathers = daysWeather.map((dayWeather) {
+        final date = dayWeather.date!;
+        final time = '${date.hour}:${date.minute}';
+        return TimedWeather(time, dayWeather);
+      });
+
+      final dayName = _getDayName(daysWeather.first.date!);
+      final dayForecast = DayForecast(dayName, timedWeathers.toList());
+      fiveDayForecast.add(dayForecast);
+    });
 
     return fiveDayForecast;
   }
