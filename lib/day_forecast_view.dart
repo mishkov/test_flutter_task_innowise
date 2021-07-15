@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:test_flutter_task_innowise/day_forecast.dart';
 
+import 'detail_weather_page.dart';
+
 class DayForecastView extends StatelessWidget {
   final DayForecast dayForecast;
 
@@ -55,6 +57,13 @@ class DayForecastView extends StatelessWidget {
                       fontSize: 30,
                     ),
                   ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => DetailWeatherPage(dayForecast)),
+                    );
+                  },
                 ),
                 !(index == dayForecast.weathers.length - 1)
                     ? Divider(
