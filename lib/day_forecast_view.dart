@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:test_flutter_task_innowise/day_forecast.dart';
-import 'package:weather/weather.dart';
 
 class DayForecastView extends StatelessWidget {
   final DayForecast dayForecast;
