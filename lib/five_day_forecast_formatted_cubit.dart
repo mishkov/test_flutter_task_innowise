@@ -6,7 +6,12 @@ import 'package:weather/weather.dart';
 import 'timed_weather.dart';
 
 class FiveDayForecastFormattedCubit extends Cubit<List<DayForecast>> {
-  FiveDayForecastFormattedCubit() : super(List<DayForecast>.empty()) {
+  static FiveDayForecastFormattedCubit _instance =
+      FiveDayForecastFormattedCubit._internal();
+
+  factory FiveDayForecastFormattedCubit() => _instance;
+
+  FiveDayForecastFormattedCubit._internal() : super(List<DayForecast>.empty()) {
     FiveDayForecastCubit().stream.listen(_forecastListener);
   }
 
