@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:location/location.dart';
 import 'package:weather/weather.dart';
 
 import 'day_forecast.dart';
+import 'location_checked.dart';
 import 'timed_temperature.dart';
 
 class FiveDayForecastCubit extends Cubit<List<DayForecast>> {
@@ -17,40 +17,13 @@ class FiveDayForecastCubit extends Cubit<List<DayForecast>> {
   Future<List<DayForecast>> _getFiveDayForecast() async {
     final String _apiKey = '18b9ecf9d78ff455db52c01518efa59e';
     final weather = WeatherFactory(_apiKey);
-    final location = await _getLocation();
+    final location = await LocationChecked().getLocation();
     final fiveDayForecastAsWeather = await weather.fiveDayForecastByLocation(
       location.latitude!,
       location.longitude!,
     );
 
     return _weatherToDayForecast(fiveDayForecastAsWeather);
-  }
-
-  Future<LocationData> _getLocation() async {
-    var location = Location();
-    await _checkService(location);
-    await _checkPermission(location);
-
-    var locationData = await location.getLocation();
-    if (locationData.latitude == null || locationData.longitude == null) {
-      throw NoLocationException('latitude or longtitude is null!');
-    }
-
-    return locationData;
-  }
-
-  Future<void> _checkService(Location location) async {
-    var serviceEnabled = await location.serviceEnabled();
-    if (!serviceEnabled) {
-      serviceEnabled = await location.requestService();
-    }
-  }
-
-  Future<void> _checkPermission(Location location) async {
-    var permissionGranted = await location.hasPermission();
-    if (permissionGranted == PermissionStatus.denied) {
-      permissionGranted = await location.requestPermission();
-    }
   }
 
   List<DayForecast> _weatherToDayForecast(List<Weather> weathers) {
@@ -102,10 +75,4 @@ class FiveDayForecastCubit extends Cubit<List<DayForecast>> {
       return week[date.weekday];
     }
   }
-}
-
-class NoLocationException implements Exception {
-  String cause;
-
-  NoLocationException(this.cause);
 }
