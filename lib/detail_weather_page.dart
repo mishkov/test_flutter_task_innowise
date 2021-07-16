@@ -31,12 +31,23 @@ class DetailWeatherPage extends StatelessWidget {
           Image.network(
             iconUrl,
             scale: 0.2,
-            loadingBuilder: (context, child, loadingProgress) {
+            loadingBuilder: (_, child, loadingProgress) {
               if (loadingProgress == null) {
                 return child;
               }
               return Center(
                 child: CircularProgressIndicator(),
+              );
+            },
+            errorBuilder: (_, error, stackTrace) {
+              print('$error $stackTrace');
+              return Container(
+                padding: EdgeInsets.only(top: 30, bottom: 10),
+                child: Icon(
+                  Icons.signal_wifi_connected_no_internet_4,
+                  color: Colors.grey[600],
+                  size: 60,
+                ),
               );
             },
           ),

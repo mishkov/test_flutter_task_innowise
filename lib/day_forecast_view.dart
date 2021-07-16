@@ -37,7 +37,23 @@ class DayForecastView extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 ListTile(
-                  leading: Image.network(iconUrl),
+                  leading: Image.network(
+                    iconUrl,
+                    scale: 0.2,
+                    loadingBuilder: (_, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                    errorBuilder: (_, error, stackTrace) {
+                      print(
+                          'When image loading in DayForecastView: $error $stackTrace');
+                      return Icon(Icons.signal_wifi_connected_no_internet_4);
+                    },
+                  ),
                   title: Text(
                     weather.time,
                     style: TextStyle(
