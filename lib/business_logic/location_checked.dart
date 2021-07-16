@@ -1,4 +1,5 @@
 import 'package:location/location.dart';
+import 'package:geolocator/geolocator.dart';
 
 class LocationChecked {
   Future<LocationData> getLocation() async {
@@ -12,7 +13,10 @@ class LocationChecked {
   }
 
   Future<void> _checkService(Location location) async {
-    var serviceEnabled = await location.serviceEnabled();
+    // I don't now why but when I call location.serviceEnabled() first time
+    // code crashes. And after pressing "Try again" it works fine. But with code
+    // below it works fine always
+    var serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       serviceEnabled = await location.requestService();
       if (!serviceEnabled) {
