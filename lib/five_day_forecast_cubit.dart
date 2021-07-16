@@ -33,10 +33,12 @@ class FiveDayForecastCubit extends Cubit<FiveDayForecastState> {
     }
     var fiveDayForecast;
     try {
-      fiveDayForecast = await weather.fiveDayForecastByLocation(
-        location.latitude!,
-        location.longitude!,
-      );
+      fiveDayForecast = await weather
+          .fiveDayForecastByLocation(
+            location.latitude!,
+            location.longitude!,
+          )
+          .timeout(Duration(seconds: 20));
       state.data = fiveDayForecast;
     } on TimeoutException catch (error) {
       state.status = Status.failed;
