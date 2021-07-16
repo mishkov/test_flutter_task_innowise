@@ -3,10 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_flutter_task_innowise/main_page_title_cubit.dart';
 
-import 'day_forecast.dart';
+import 'cubit_state.dart';
 import 'day_forecast_view.dart';
 import 'detail_weather_page.dart';
 import 'five_day_forecast_formatted_cubit.dart';
+import 'five_day_forecast_formatted_state.dart';
+import 'main_page_title_state.dart';
 
 void main() {
   runApp(MyApp());
@@ -36,39 +38,109 @@ class MainPage extends StatelessWidget {
       appBar: AppBar(
         title: BlocProvider(
           create: (_) => MainPageTitleCubit(),
-          child: BlocBuilder<MainPageTitleCubit, String>(
-            builder: (_, title) {
-              return Text(title);
+          child: BlocBuilder<MainPageTitleCubit, MainPageTitleState>(
+            builder: (_, state) => Text(state.data),
+          ),
+        ),
+      ),
+      body: Center(
+        child: BlocProvider(
+          create: (_) => FiveDayForecastFormattedCubit(),
+          child: BlocBuilder<FiveDayForecastFormattedCubit,
+              FiveDayForecstFormattedState>(
+            builder: (buildContext, state) {
+              if (state.status == Status.done) {
+                return ListView.builder(
+                  physics: ClampingScrollPhysics(),
+                  itemCount: state.data.length,
+                  itemBuilder: (_, index) {
+                    return DayForecastView(state.data[index]);
+                  },
+                );
+              } else if (state.status == Status.loading) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(top: 100, bottom: 10),
+                      child: CircularProgressIndicator.adaptive(),
+                    ),
+                    Text(
+                      'Loading...',
+                    ),
+                  ],
+                );
+              } else if (state.status == Status.failed) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(state.errorDetail),
+                    ElevatedButton(
+                      onPressed: () {
+                        buildContext
+                            .read<FiveDayForecastFormattedCubit>()
+                            .tryAgain();
+                      },
+                      child: Text('Try again'),
+                    ),
+                  ],
+                );
+              } else {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Unknown response status.'),
+                    ElevatedButton(
+                      onPressed: () {
+                        buildContext
+                            .read<FiveDayForecastFormattedCubit>()
+                            .tryAgain();
+                      },
+                      child: Text('Try again'),
+                    ),
+                  ],
+                );
+              }
             },
           ),
         ),
       ),
-      body: BlocProvider(
+      floatingActionButton: BlocProvider(
         create: (_) => FiveDayForecastFormattedCubit(),
-        child: BlocBuilder<FiveDayForecastFormattedCubit, List<DayForecast>>(
-          builder: (_, fiveDayForecast) {
-            return ListView.builder(
-              physics: ClampingScrollPhysics(),
-              itemCount: fiveDayForecast.length,
-              itemBuilder: (_, index) {
-                return DayForecastView(fiveDayForecast[index]);
+        child: BlocBuilder<FiveDayForecastFormattedCubit,
+            FiveDayForecstFormattedState>(builder: (_, state) {
+          if (state.status == Status.done) {
+            return ElevatedButton(
+              onPressed: () {
+                final dayForecast = state.data.first;
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) {
+                    return DetailWeatherPage(dayForecast);
+                  }),
+                );
               },
+              child: Text('Current Weather'),
             );
-          },
-        ),
-      ),
-      floatingActionButton: ElevatedButton(
-        onPressed: () async {
-          final forecast = FiveDayForecastFormattedCubit();
-          final dayForecast = forecast.state.first;
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) {
-              return DetailWeatherPage(dayForecast);
-            }),
-          );
-        },
-        child: Text('Current Weather'),
+          } else if (state.status == Status.loading) {
+            return ElevatedButton(
+              onPressed: null,
+              child: Text('Loading...'),
+            );
+          } else if (state.status == Status.failed) {
+            return ElevatedButton(
+              onPressed: null,
+              child: Text('Failed'),
+            );
+          } else {
+            return ElevatedButton(
+              onPressed: null,
+              child: Text('Unknown response status!'),
+            );
+          }
+        }),
       ),
     );
   }
