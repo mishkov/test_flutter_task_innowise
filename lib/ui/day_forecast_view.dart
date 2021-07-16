@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:test_flutter_task_innowise/day_forecast.dart';
+import 'package:test_flutter_task_innowise/business_logic/models/day_forecast.dart';
 
 import 'detail_weather_page.dart';
 

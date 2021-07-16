@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:test_flutter_task_innowise/cubit_state.dart';
+import 'package:test_flutter_task_innowise/business_logic/states/cubit_state.dart';
 import 'package:weather/weather.dart';
 
-import 'five_day_forecast_state.dart';
-import 'location_checked.dart';
+import '../states/five_day_forecast_state.dart';
+import '../location_checked.dart';
 
 class FiveDayForecastCubit extends Cubit<FiveDayForecastState> {
   static final _fiveDayForecastCubit = FiveDayForecastCubit._internal();

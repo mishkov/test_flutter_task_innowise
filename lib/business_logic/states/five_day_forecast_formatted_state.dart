@@ -1,6 +1,6 @@
-import 'package:test_flutter_task_innowise/cubit_state.dart';
+import 'package:test_flutter_task_innowise/business_logic/states/cubit_state.dart';
 
-import 'day_forecast.dart';
+import '../models/day_forecast.dart';
 
 class FiveDayForecstFormattedState extends CubitState<List<DayForecast>> {
   FiveDayForecstFormattedState() : super([]);

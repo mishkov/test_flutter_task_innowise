@@ -1,4 +1,4 @@
-import 'package:test_flutter_task_innowise/timed_weather.dart';
+import 'package:test_flutter_task_innowise/business_logic/models/timed_weather.dart';
 
 class DayForecast {
   final String dayName;

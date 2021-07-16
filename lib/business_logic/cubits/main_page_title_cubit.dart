@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:test_flutter_task_innowise/main_page_title_state.dart';
+import 'package:test_flutter_task_innowise/business_logic/states/main_page_title_state.dart';
 
-import 'cubit_state.dart';
+import '../states/cubit_state.dart';
 import 'five_day_forecast_cubit.dart';
-import 'five_day_forecast_state.dart';
+import '../states/five_day_forecast_state.dart';
 
 class MainPageTitleCubit extends Cubit<MainPageTitleState> {
   MainPageTitleCubit()
