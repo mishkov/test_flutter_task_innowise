@@ -30,6 +30,8 @@ class FiveDayForecastCubit extends Cubit<FiveDayForecastState> {
       state.status = Status.failed;
       state.errorDetail = 'Failed getting location';
       print('$error ${StackTrace.current}');
+      emit(state);
+      return Future.error(error, StackTrace.current);
     }
     var fiveDayForecast;
     try {
@@ -44,10 +46,14 @@ class FiveDayForecastCubit extends Cubit<FiveDayForecastState> {
       state.status = Status.failed;
       state.errorDetail = 'Timeout of internet connection.';
       print('$error ${StackTrace.current}');
+      emit(state);
+      return Future.error(error, StackTrace.current);
     } catch (error) {
       state.status = Status.failed;
       state.errorDetail = 'Failed getting five day forecast by location.';
       print('$error ${StackTrace.current}');
+      emit(state);
+      return Future.error(error, StackTrace.current);
     }
 
     state.status = Status.done;
