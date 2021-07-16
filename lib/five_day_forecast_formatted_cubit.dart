@@ -1,25 +1,37 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_flutter_task_innowise/day_forecast.dart';
 import 'package:test_flutter_task_innowise/five_day_forecast_cubit.dart';
+import 'package:test_flutter_task_innowise/five_day_forecast_formatted_state.dart';
 import 'package:weather/weather.dart';
 
+import 'cubit_state.dart';
+import 'five_day_forecast_state.dart';
 import 'timed_weather.dart';
 
-class FiveDayForecastFormattedCubit extends Cubit<List<DayForecast>> {
+class FiveDayForecastFormattedCubit
+    extends Cubit<FiveDayForecstFormattedState> {
   static FiveDayForecastFormattedCubit _instance =
       FiveDayForecastFormattedCubit._internal();
 
   factory FiveDayForecastFormattedCubit() => _instance;
 
-  FiveDayForecastFormattedCubit._internal() : super(List<DayForecast>.empty()) {
+  FiveDayForecastFormattedCubit._internal()
+      : super(FiveDayForecstFormattedState()..status = Status.loading) {
     FiveDayForecastCubit().stream.listen(_forecastListener);
   }
 
-  Future<void> _forecastListener(List<Weather> forecast) async {
-    if (forecast.isEmpty) return;
+  void tryAgain() {
+    FiveDayForecastCubit().emitFiveDayForecast();
+  }
 
-    final formattedForecast = _getFormattedForecast(forecast);
-    emit(formattedForecast);
+  Future<void> _forecastListener(FiveDayForecastState forecastState) async {
+    final formattedForecastState = FiveDayForecstFormattedState()
+      ..status = forecastState.status
+      ..errorDetail = forecastState.errorDetail;
+    if (forecastState.status == Status.done) {
+      formattedForecastState.data = _getFormattedForecast(forecastState.data);
+    }
+    emit(formattedForecastState);
   }
 
   List<DayForecast> _getFormattedForecast(List<Weather> forecast) {

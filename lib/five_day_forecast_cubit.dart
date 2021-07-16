@@ -1,26 +1,54 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_flutter_task_innowise/cubit_state.dart';
 import 'package:weather/weather.dart';
 
+import 'five_day_forecast_state.dart';
 import 'location_checked.dart';
 
-class FiveDayForecastCubit extends Cubit<List<Weather>> {
+class FiveDayForecastCubit extends Cubit<FiveDayForecastState> {
   static final _fiveDayForecastCubit = FiveDayForecastCubit._internal();
+  final _loadingState = FiveDayForecastState()..status = Status.loading;
 
   factory FiveDayForecastCubit() => _fiveDayForecastCubit;
 
-  FiveDayForecastCubit._internal() : super(List<Weather>.empty()) {
-    _getFiveDayForecast().then((fiveDayForecast) => emit(fiveDayForecast));
+  FiveDayForecastCubit._internal()
+      : super(FiveDayForecastState()..status = Status.loading) {
+    emitFiveDayForecast();
   }
 
-  Future<List<Weather>> _getFiveDayForecast() async {
+  Future<void> emitFiveDayForecast() async {
+    emit(_loadingState);
     final String _apiKey = '18b9ecf9d78ff455db52c01518efa59e';
     final weather = WeatherFactory(_apiKey);
-    final location = await LocationChecked().getLocation();
-    final fiveDayForecastAsWeather = await weather.fiveDayForecastByLocation(
-      location.latitude!,
-      location.longitude!,
-    );
+    final state = FiveDayForecastState();
+    var location;
+    try {
+      location = await LocationChecked().getLocation();
+    } catch (error) {
+      state.status = Status.failed;
+      state.errorDetail = 'Failed getting location';
+      print('$error ${StackTrace.current}');
+    }
+    var fiveDayForecast;
+    try {
+      fiveDayForecast = await weather.fiveDayForecastByLocation(
+        location.latitude!,
+        location.longitude!,
+      );
+      state.data = fiveDayForecast;
+    } on TimeoutException catch (error) {
+      state.status = Status.failed;
+      state.errorDetail = 'Timeout of internet connection.';
+      print('$error ${StackTrace.current}');
+    } catch (error) {
+      state.status = Status.failed;
+      state.errorDetail = 'Failed getting five day forecast by location.';
+      print('$error ${StackTrace.current}');
+    }
 
-    return fiveDayForecastAsWeather;
+    state.status = Status.done;
+    emit(state);
   }
 }
