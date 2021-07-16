@@ -7,9 +7,6 @@ class LocationChecked {
     await _checkPermission(location);
 
     var locationData = await location.getLocation();
-    if (locationData.latitude == null || locationData.longitude == null) {
-      throw NoLocationException('latitude or longtitude is null!');
-    }
 
     return locationData;
   }
@@ -18,6 +15,9 @@ class LocationChecked {
     var serviceEnabled = await location.serviceEnabled();
     if (!serviceEnabled) {
       serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
+        throw NoLocationException('Service is not Enabled!');
+      }
     }
   }
 
@@ -25,6 +25,9 @@ class LocationChecked {
     var permissionGranted = await location.hasPermission();
     if (permissionGranted == PermissionStatus.denied) {
       permissionGranted = await location.requestPermission();
+      if (permissionGranted == PermissionStatus.denied) {
+        throw NoLocationException('No permission granted!');
+      }
     }
   }
 }
