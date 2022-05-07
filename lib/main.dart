@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
 
 class MainPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext mainPageContext) {
     final mainPageTitleCubit = MainPageTitleCubit();
     final fiveDayForecastFormattedCubit = FiveDayForecastFormattedCubit();
 
@@ -48,7 +48,7 @@ class MainPage extends StatelessWidget {
         child: BlocBuilder<FiveDayForecastFormattedCubit,
             FiveDayForecstFormattedState>(
           bloc: fiveDayForecastFormattedCubit,
-          builder: (buildContext, state) {
+          builder: (forecastContext, state) {
             if (state.status == Status.done) {
               return ListView.builder(
                 physics: ClampingScrollPhysics(),
@@ -87,8 +87,8 @@ class MainPage extends StatelessWidget {
               onPressed: () {
                 final dayForecast = state.data.first;
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
+                  mainPageContext,
+                  MaterialPageRoute(builder: (_) {
                     return DetailWeatherPage(dayForecast);
                   }),
                 );
