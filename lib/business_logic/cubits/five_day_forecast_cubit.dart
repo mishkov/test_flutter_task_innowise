@@ -26,7 +26,7 @@ class FiveDayForecastCubit extends Cubit<FiveDayForecastState> {
     var location;
     try {
       location =
-          await LocationChecked().getLocation().timeout(Duration(seconds: 5));
+          await LocationChecked().getLocation().timeout(Duration(seconds: 15));
     } on TimeoutException catch (error) {
       state.status = Status.failed;
       state.errorDetail = 'Timeout of internet connection.';
