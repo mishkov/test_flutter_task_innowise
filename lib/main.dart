@@ -35,6 +35,7 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mainPageTitleCubit = MainPageTitleCubit();
+    final fiveDayForecastFormattedCubit = FiveDayForecastFormattedCubit();
 
     return Scaffold(
       appBar: AppBar(
@@ -44,45 +45,43 @@ class MainPage extends StatelessWidget {
         ),
       ),
       body: Center(
-        child: BlocProvider(
-          create: (_) => FiveDayForecastFormattedCubit(),
-          child: BlocBuilder<FiveDayForecastFormattedCubit,
-              FiveDayForecstFormattedState>(
-            builder: (buildContext, state) {
-              if (state.status == Status.done) {
-                return ListView.builder(
-                  physics: ClampingScrollPhysics(),
-                  itemCount: state.data.length,
-                  itemBuilder: (_, index) {
-                    return DayForecastView(state.data[index]);
-                  },
-                );
-              } else if (state.status == Status.loading) {
-                return const LoadingView();
-              } else if (state.status == Status.failed) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(state.errorDetail),
-                    const TryAgainButton(),
-                  ],
-                );
-              } else {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Unknown response status.'),
-                  ],
-                );
-              }
-            },
-          ),
+        child: BlocBuilder<FiveDayForecastFormattedCubit,
+            FiveDayForecstFormattedState>(
+          bloc: fiveDayForecastFormattedCubit,
+          builder: (buildContext, state) {
+            if (state.status == Status.done) {
+              return ListView.builder(
+                physics: ClampingScrollPhysics(),
+                itemCount: state.data.length,
+                itemBuilder: (_, index) {
+                  return DayForecastView(state.data[index]);
+                },
+              );
+            } else if (state.status == Status.loading) {
+              return const LoadingView();
+            } else if (state.status == Status.failed) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(state.errorDetail),
+                  const TryAgainButton(),
+                ],
+              );
+            } else {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Unknown response status.'),
+                ],
+              );
+            }
+          },
         ),
       ),
-      floatingActionButton: BlocProvider(
-        create: (_) => FiveDayForecastFormattedCubit(),
-        child: BlocBuilder<FiveDayForecastFormattedCubit,
-            FiveDayForecstFormattedState>(builder: (_, state) {
+      floatingActionButton: BlocBuilder<FiveDayForecastFormattedCubit,
+          FiveDayForecstFormattedState>(
+        bloc: fiveDayForecastFormattedCubit,
+        builder: (_, state) {
           if (state.status == Status.done) {
             return ElevatedButton(
               onPressed: () {
@@ -112,7 +111,7 @@ class MainPage extends StatelessWidget {
               child: Text('Unknown response status!'),
             );
           }
-        }),
+        },
       ),
     );
   }
