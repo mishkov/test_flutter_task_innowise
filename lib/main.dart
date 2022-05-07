@@ -58,23 +58,13 @@ class MainPage extends StatelessWidget {
                   },
                 );
               } else if (state.status == Status.loading) {
-                return Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(top: 100, bottom: 10),
-                      child: CircularProgressIndicator.adaptive(),
-                    ),
-                    Text(
-                      'Loading...',
-                    ),
-                  ],
-                );
+                return const LoadingView();
               } else if (state.status == Status.failed) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(state.errorDetail),
-                    TryAgainButton(),
+                    const TryAgainButton(),
                   ],
                 );
               } else {
@@ -124,6 +114,27 @@ class MainPage extends StatelessWidget {
           }
         }),
       ),
+    );
+  }
+}
+
+class LoadingView extends StatelessWidget {
+  const LoadingView({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.only(top: 100, bottom: 10),
+          child: CircularProgressIndicator.adaptive(),
+        ),
+        Text(
+          'Loading...',
+        ),
+      ],
     );
   }
 }
