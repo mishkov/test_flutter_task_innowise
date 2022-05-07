@@ -7,7 +7,7 @@ class LocationChecked {
     await _checkService(location);
     await _checkPermission(location);
 
-    var locationData = await location.getLocation();
+    var locationData = await location.getLocation().timeout(Duration(seconds: 15));
 
     return locationData;
   }
