@@ -25,11 +25,16 @@ class FiveDayForecastCubit extends Cubit<FiveDayForecastState> {
     final state = FiveDayForecastState();
     var location;
     try {
-      location =
-          await LocationChecked().getLocation().timeout(Duration(seconds: 15));
+      location = await LocationChecked().getLocation();
     } on TimeoutException catch (error) {
       state.status = Status.failed;
       state.errorDetail = 'Timeout of internet connection.';
+      print('$error ${StackTrace.current}');
+      emit(state);
+      return Future.error(error, StackTrace.current);
+    } on LocationPermissionDeniedForeverException catch (error) {
+      state.status = Status.failed;
+      state.errorDetail = 'You have denied location permission forever';
       print('$error ${StackTrace.current}');
       emit(state);
       return Future.error(error, StackTrace.current);
