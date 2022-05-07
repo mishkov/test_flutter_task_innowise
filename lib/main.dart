@@ -76,14 +76,7 @@ class MainPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(state.errorDetail),
-                    ElevatedButton(
-                      onPressed: () {
-                        buildContext
-                            .read<FiveDayForecastFormattedCubit>()
-                            .tryAgain();
-                      },
-                      child: Text('Try again'),
-                    ),
+                    TryAgainButton(),
                   ],
                 );
               } else {
@@ -92,14 +85,6 @@ class MainPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('Unknown response status.'),
-                    ElevatedButton(
-                      onPressed: () {
-                        buildContext
-                            .read<FiveDayForecastFormattedCubit>()
-                            .tryAgain();
-                      },
-                      child: Text('Try again'),
-                    ),
                   ],
                 );
               }
@@ -142,6 +127,20 @@ class MainPage extends StatelessWidget {
           }
         }),
       ),
+    );
+  }
+}
+
+class TryAgainButton extends StatelessWidget {
+  const TryAgainButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        context.read<FiveDayForecastFormattedCubit>().tryAgain();
+      },
+      child: Text('Try again'),
     );
   }
 }
