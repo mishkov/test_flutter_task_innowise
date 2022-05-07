@@ -34,13 +34,13 @@ class MyApp extends StatelessWidget {
 class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final mainPageTitleCubit = MainPageTitleCubit();
+
     return Scaffold(
       appBar: AppBar(
-        title: BlocProvider(
-          create: (_) => MainPageTitleCubit(),
-          child: BlocBuilder<MainPageTitleCubit, MainPageTitleState>(
-            builder: (_, state) => Text(state.data),
-          ),
+        title: BlocBuilder<MainPageTitleCubit, MainPageTitleState>(
+          bloc: mainPageTitleCubit,
+          builder: (_, state) => Text(state.data),
         ),
       ),
       body: Center(
