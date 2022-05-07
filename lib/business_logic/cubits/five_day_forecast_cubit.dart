@@ -33,6 +33,12 @@ class FiveDayForecastCubit extends Cubit<FiveDayForecastState> {
       print('$error ${StackTrace.current}');
       emit(state);
       return Future.error(error, StackTrace.current);
+    } on LocationPermissionDeniedForeverException catch (error) {
+      state.status = Status.failed;
+      state.errorDetail = 'You have denied location permission forever';
+      print('$error ${StackTrace.current}');
+      emit(state);
+      return Future.error(error, StackTrace.current);
     } catch (error) {
       state.status = Status.failed;
       state.errorDetail = 'Failed getting location';

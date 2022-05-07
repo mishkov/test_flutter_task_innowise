@@ -26,11 +26,13 @@ class LocationChecked {
   }
 
   Future<void> _checkPermission(Location location) async {
-    var permissionGranted = await location.hasPermission();
-    if (permissionGranted == PermissionStatus.denied) {
-      permissionGranted = await location.requestPermission();
-      if (permissionGranted == PermissionStatus.denied) {
+    var permissionStatus = await location.hasPermission();
+    if (permissionStatus == PermissionStatus.denied) {
+      permissionStatus = await location.requestPermission();
+      if (permissionStatus == PermissionStatus.denied) {
         throw NoLocationException('No permission granted!');
+      } else if (permissionStatus == PermissionStatus.deniedForever) {
+        throw LocationPermissionDeniedForeverException('User has denied location permission forever');
       }
     }
   }
@@ -40,4 +42,10 @@ class NoLocationException implements Exception {
   String cause;
 
   NoLocationException(this.cause);
+}
+
+class LocationPermissionDeniedForeverException implements Exception {
+  String message;
+
+  LocationPermissionDeniedForeverException(this.message);
 }
