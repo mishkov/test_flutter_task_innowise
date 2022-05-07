@@ -59,7 +59,6 @@ class MainPage extends StatelessWidget {
                 );
               } else if (state.status == Status.loading) {
                 return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
                       padding: EdgeInsets.only(top: 100, bottom: 10),
@@ -72,7 +71,6 @@ class MainPage extends StatelessWidget {
                 );
               } else if (state.status == Status.failed) {
                 return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(state.errorDetail),
@@ -81,7 +79,6 @@ class MainPage extends StatelessWidget {
                 );
               } else {
                 return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text('Unknown response status.'),
