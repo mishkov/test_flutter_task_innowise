@@ -85,7 +85,7 @@ class DayForecastView extends StatelessWidget {
                         height: 2,
                         indent: 80,
                       )
-                    : Container()
+                    : SizedBox.shrink()
               ],
             );
           },

@@ -86,7 +86,7 @@ class DetailWeatherPage extends StatelessWidget {
                               size: iconSize,
                               color: iconColor,
                             ),
-                            Container(
+                            SizedBox(
                               height: iconSpace,
                             ),
                             Text(
@@ -95,7 +95,7 @@ class DetailWeatherPage extends StatelessWidget {
                             ),
                           ],
                         )
-                      : Container(),
+                      : SizedBox.shrink(),
                   weather.rainLastHour != null
                       ? Column(
                           children: [
@@ -104,7 +104,7 @@ class DetailWeatherPage extends StatelessWidget {
                               size: iconSize,
                               color: iconColor,
                             ),
-                            Container(
+                            SizedBox(
                               height: iconSpace,
                             ),
                             Text(
@@ -113,7 +113,7 @@ class DetailWeatherPage extends StatelessWidget {
                             ),
                           ],
                         )
-                      : Container(),
+                      : SizedBox.shrink(),
                   weather.pressure != null
                       ? Column(
                           children: [
@@ -122,7 +122,7 @@ class DetailWeatherPage extends StatelessWidget {
                               color: iconColor,
                               size: iconSize,
                             ),
-                            Container(
+                            SizedBox(
                               height: iconSpace,
                             ),
                             Text(
@@ -131,7 +131,7 @@ class DetailWeatherPage extends StatelessWidget {
                             ),
                           ],
                         )
-                      : Container(),
+                      : SizedBox.shrink(),
                 ],
               ),
               Row(
@@ -145,7 +145,7 @@ class DetailWeatherPage extends StatelessWidget {
                               size: iconSize,
                               color: iconColor,
                             ),
-                            Container(
+                            SizedBox(
                               height: iconSpace,
                             ),
                             Text(
@@ -154,7 +154,7 @@ class DetailWeatherPage extends StatelessWidget {
                             ),
                           ],
                         )
-                      : Container(),
+                      : SizedBox.shrink(),
                   weather.windDegree != null
                       ? Column(
                           children: [
@@ -169,7 +169,7 @@ class DetailWeatherPage extends StatelessWidget {
                             ),
                           ],
                         )
-                      : Container(),
+                      : SizedBox.shrink(),
                 ],
               ),
             ],
