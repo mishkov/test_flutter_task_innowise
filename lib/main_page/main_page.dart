@@ -7,6 +7,7 @@ import '../business_logic/states/five_day_forecast_formatted_state.dart';
 import '../ui/day_forecast_view.dart';
 import '../ui/detail_weather_page.dart';
 import 'app_bar/application_bar.dart';
+import 'loading_view.dart';
 import 'try_again_button.dart';
 
 class MainPage extends StatelessWidget {
@@ -92,27 +93,3 @@ class MainPage extends StatelessWidget {
     );
   }
 }
-
-class LoadingView extends StatelessWidget {
-  const LoadingView({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(top: 10, bottom: 10),
-          child: CircularProgressIndicator.adaptive(),
-        ),
-        Text(
-          'Loading...',
-        ),
-      ],
-    );
-  }
-}
-
-
