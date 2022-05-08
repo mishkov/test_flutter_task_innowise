@@ -8,6 +8,7 @@ void main() {
       final apiKey = '18b9ecf9d78ff455db52c01518efa59e';
       final weather = WeatherFactory(apiKey);
 
+      // Minsk city, Belarus
       final latitude = 53.9006;
       final longitude = 27.5590;
       final forecast =
