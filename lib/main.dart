@@ -144,9 +144,10 @@ class LoadingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(
-          padding: EdgeInsets.only(top: 100, bottom: 10),
+          padding: EdgeInsets.only(top: 10, bottom: 10),
           child: CircularProgressIndicator.adaptive(),
         ),
         Text(
