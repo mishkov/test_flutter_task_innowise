@@ -7,6 +7,7 @@ import '../business_logic/states/five_day_forecast_formatted_state.dart';
 import '../ui/day_forecast_view.dart';
 import '../ui/detail_weather_page.dart';
 import 'app_bar/application_bar.dart';
+import 'try_again_button.dart';
 
 class MainPage extends StatelessWidget {
   static final routeName = '/';
@@ -114,16 +115,4 @@ class LoadingView extends StatelessWidget {
   }
 }
 
-class TryAgainButton extends StatelessWidget {
-  const TryAgainButton({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        context.read<FiveDayForecastFormattedCubit>().tryAgain();
-      },
-      child: Text('Try again'),
-    );
-  }
-}
