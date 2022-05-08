@@ -145,7 +145,7 @@ class LoadingView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
+        Padding(
           padding: EdgeInsets.only(top: 100, bottom: 10),
           child: CircularProgressIndicator.adaptive(),
         ),

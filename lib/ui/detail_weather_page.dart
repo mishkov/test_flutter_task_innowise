@@ -43,7 +43,7 @@ class DetailWeatherPage extends StatelessWidget {
             },
             errorBuilder: (_, error, stackTrace) {
               print('$error $stackTrace');
-              return Container(
+              return Padding(
                 padding: EdgeInsets.only(top: 30, bottom: 10),
                 child: Icon(
                   Icons.signal_wifi_connected_no_internet_4,
