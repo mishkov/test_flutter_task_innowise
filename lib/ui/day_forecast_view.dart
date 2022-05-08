@@ -13,7 +13,6 @@ class DayForecastView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Divider(height: 5),
         Container(
           padding: EdgeInsets.all(8),
           child: Text(
