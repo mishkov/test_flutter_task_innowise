@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:test_flutter_task_innowise/business_logic/models/day_forecast.dart';
-import 'package:test_flutter_task_innowise/business_logic/models/timed_weather.dart';
+import 'package:test_flutter_task_innowise/five_day_forecast/day_forecast.dart';
+import 'package:test_flutter_task_innowise/five_day_forecast/timed_weather.dart';
 import 'package:weather/weather.dart';
 
 class FiveDayForecast {

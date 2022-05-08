@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_flutter_task_innowise/business_logic/cubits/main_page_title_cubit.dart';
-import 'package:test_flutter_task_innowise/business_logic/models/day_forecast.dart';
+import 'package:test_flutter_task_innowise/five_day_forecast/day_forecast.dart';
 
 import 'business_logic/states/cubit_state.dart';
 import 'ui/day_forecast_view.dart';

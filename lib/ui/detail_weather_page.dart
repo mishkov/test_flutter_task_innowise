@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:test_flutter_task_innowise/business_logic/models/day_forecast.dart';
+import 'package:test_flutter_task_innowise/five_day_forecast/day_forecast.dart';
 import 'package:weather_icons/weather_icons.dart';
 
 import '../get_week_day_name.dart';

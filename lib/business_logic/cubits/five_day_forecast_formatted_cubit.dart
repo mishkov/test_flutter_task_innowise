@@ -1,12 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:test_flutter_task_innowise/business_logic/models/day_forecast.dart';
+import 'package:test_flutter_task_innowise/five_day_forecast/day_forecast.dart';
 import 'package:test_flutter_task_innowise/business_logic/cubits/five_day_forecast_cubit.dart';
 import 'package:test_flutter_task_innowise/business_logic/states/five_day_forecast_formatted_state.dart';
 import 'package:weather/weather.dart';
 
 import '../states/cubit_state.dart';
 import '../states/five_day_forecast_state.dart';
-import '../models/timed_weather.dart';
+import '../../five_day_forecast/timed_weather.dart';
 
 class FiveDayForecastFormattedCubit
     extends Cubit<FiveDayForecstFormattedState> {
