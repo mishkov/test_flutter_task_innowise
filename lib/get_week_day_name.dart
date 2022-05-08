@@ -1,5 +1,5 @@
 String getDayName(int weekDay) {
-  if (!((1 <= weekDay) && (weekDay <= 7))) {
+  if (!((DateTime.monday <= weekDay) && (weekDay <= DateTime.sunday))) {
     throw InvalidWeekDayException();
   }
 
