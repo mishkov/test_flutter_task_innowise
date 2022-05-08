@@ -4,6 +4,8 @@ import 'package:test_flutter_task_innowise/business_logic/models/day_forecast.da
 import 'package:weather_icons/weather_icons.dart';
 
 class DetailWeatherPage extends StatelessWidget {
+  static final routeName = '/weather-details';
+
   final DayForecast dayForecast;
 
   DetailWeatherPage(this.dayForecast);

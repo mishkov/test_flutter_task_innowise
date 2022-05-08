@@ -74,10 +74,10 @@ class DayForecastView extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushNamed(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => DetailWeatherPage(dayForecast)),
+                      DetailWeatherPage.routeName,
+                      arguments: dayForecast,
                     );
                   },
                 ),
