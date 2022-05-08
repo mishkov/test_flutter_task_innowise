@@ -5,7 +5,7 @@ import '../business_logic/cubits/five_day_forecast_formatted_cubit.dart';
 import '../business_logic/states/cubit_state.dart';
 import '../business_logic/states/five_day_forecast_formatted_state.dart';
 import 'day_forecast_view.dart';
-import '../ui/detail_weather_page.dart';
+import '../detail_weather/detail_weather_page.dart';
 import 'app_bar/application_bar.dart';
 import 'loading_view.dart';
 import 'try_again_button.dart';

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:test_flutter_task_innowise/five_day_forecast/day_forecast.dart';
 
 import 'main_page/main_page.dart';
-import 'ui/detail_weather_page.dart';
+import 'detail_weather/detail_weather_page.dart';
 
 void main() {
   runApp(MyApp());
