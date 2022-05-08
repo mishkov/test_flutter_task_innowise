@@ -33,6 +33,8 @@ class FiveDayForecast {
     final timedWeathers = await _weather
         .fiveDayForecastByLocation(_latitude, _longitude)
         .timeout(timeoutTime, onTimeout: () {
+      _forecastStreamController.addError(
+          WeatherTimeoutException(), StackTrace.current);
       throw WeatherTimeoutException();
     });
 
