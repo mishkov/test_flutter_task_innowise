@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:test_flutter_task_innowise/business_logic/models/day_forecast.dart';
 
+import '../get_week_day_name.dart';
 import 'detail_weather_page.dart';
 
 class DayForecastView extends StatelessWidget {
@@ -16,7 +17,7 @@ class DayForecastView extends StatelessWidget {
         Padding(
           padding: EdgeInsets.all(8),
           child: Text(
-            dayForecast.dayName,
+            getDayName(dayForecast.weekDay),
             style: TextStyle(
               fontSize: 25,
             ),

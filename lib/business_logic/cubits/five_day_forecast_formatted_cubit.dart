@@ -54,29 +54,10 @@ class FiveDayForecastFormattedCubit
         return TimedWeather(time, dayWeather);
       });
 
-      final dayName = _getDayName(daysWeather.first.date!);
-      final dayForecast = DayForecast(dayName, timedWeathers.toList());
+      final dayForecast = DayForecast(daysWeather.first.date!.weekday, timedWeathers.toList());
       fiveDayForecast.add(dayForecast);
     });
 
     return fiveDayForecast;
-  }
-
-  String _getDayName(DateTime date) {
-    final now = DateTime.now();
-    if (now.day == date.day) {
-      return 'Today';
-    } else {
-      final week = [
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-        'Sunday',
-      ];
-      return week[date.weekday - 1];
-    }
   }
 }
