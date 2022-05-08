@@ -5,6 +5,7 @@ import 'package:test_flutter_task_innowise/business_logic/cubits/main_page_title
 import 'package:test_flutter_task_innowise/five_day_forecast/day_forecast.dart';
 
 import 'business_logic/states/cubit_state.dart';
+import 'main_page/app_bar/application_bar.dart';
 import 'ui/day_forecast_view.dart';
 import 'ui/detail_weather_page.dart';
 import 'business_logic/cubits/five_day_forecast_formatted_cubit.dart';
@@ -51,16 +52,10 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext mainPageContext) {
-    final mainPageTitleCubit = MainPageTitleCubit();
     final fiveDayForecastFormattedCubit = FiveDayForecastFormattedCubit();
 
     return Scaffold(
-      appBar: AppBar(
-        title: BlocBuilder<MainPageTitleCubit, MainPageTitleState>(
-          bloc: mainPageTitleCubit,
-          builder: (_, state) => Text(state.data),
-        ),
-      ),
+      appBar: MainPageAppBar(),
       body: Center(
         child: BlocProvider.value(
           value: fiveDayForecastFormattedCubit,
