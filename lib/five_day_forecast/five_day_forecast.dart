@@ -5,6 +5,11 @@ import 'package:weather/weather.dart';
 class FiveDayForecast {
   static final _weatherApiKey = '18b9ecf9d78ff455db52c01518efa59e';
   final _weather = WeatherFactory(_weatherApiKey);
+  static final instance = FiveDayForecast._internal();
+
+  factory FiveDayForecast() => instance;
+
+  FiveDayForecast._internal();
 
   Future<List<DayForecast>> forLocation(
     double latitude,
