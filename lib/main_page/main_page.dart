@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../business_logic/cubits/five_day_forecast_formatted_cubit.dart';
 import '../business_logic/states/cubit_state.dart';
 import '../business_logic/states/five_day_forecast_formatted_state.dart';
-import '../ui/day_forecast_view.dart';
+import 'day_forecast_view.dart';
 import '../ui/detail_weather_page.dart';
 import 'app_bar/application_bar.dart';
 import 'loading_view.dart';

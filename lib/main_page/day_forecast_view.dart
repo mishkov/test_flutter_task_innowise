@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:test_flutter_task_innowise/five_day_forecast/day_forecast.dart';
 
 import '../get_week_day_name.dart';
-import 'detail_weather_page.dart';
+import '../ui/detail_weather_page.dart';
 
 class DayForecastView extends StatelessWidget {
   final DayForecast dayForecast;
