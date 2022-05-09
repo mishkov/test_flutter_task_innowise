@@ -23,9 +23,7 @@ class MyApp extends StatelessWidget {
       ),
       onGenerateRoute: (settings) {
         if (settings.name == MainPage.routeName) {
-          return MaterialPageRoute(builder: (_) {
-            return MainPage();
-          });
+          return MaterialPageRoute(builder: (_) => MainPage());
         }
 
         if (settings.name == '/weather-details') {
