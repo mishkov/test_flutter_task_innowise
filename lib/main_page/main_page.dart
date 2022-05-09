@@ -35,7 +35,6 @@ class MainPage extends StatelessWidget {
         Widget content;
         if (state.forecastStatus == ForecastAvailabilityStatus.done) {
           content = ListView.builder(
-            physics: ClampingScrollPhysics(),
             itemCount: state.forecast!.length,
             itemBuilder: (_, index) {
               return DayForecastView(state.forecast![index]);
