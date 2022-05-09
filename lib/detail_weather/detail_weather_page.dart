@@ -63,7 +63,7 @@ class DetailWeatherPage extends StatelessWidget {
               '${weather.areaName}, ${weather.country}',
               style: TextStyle(
                 color: Colors.grey,
-                fontSize: 20,
+                fontSize: 16,
               ),
             ),
             Text(
