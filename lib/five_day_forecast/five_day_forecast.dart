@@ -75,7 +75,9 @@ extension _ByDaySplitter on List<Weather> {
       final weekDayForecast = this.of(weekDay);
 
       final timedForecast = weekDayForecast.toTimedWeather();
-      result.add(DayForecast(weekDay, timedForecast));
+      if (timedForecast.isNotEmpty) {
+        result.add(DayForecast(weekDay, timedForecast));
+      }
     }
 
     return result;
