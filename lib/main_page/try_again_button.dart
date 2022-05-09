@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../business_logic/cubits/five_day_forecast_formatted_cubit.dart';
+import 'package:test_flutter_task_innowise/main_page/main_page_cubit.dart';
 
 class TryAgainButton extends StatelessWidget {
   const TryAgainButton({Key? key}) : super(key: key);
@@ -10,7 +9,7 @@ class TryAgainButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        context.read<FiveDayForecastFormattedCubit>().tryAgain();
+        context.read<MainPageCubit>().fetchForecast();
       },
       child: Text('Try again'),
     );

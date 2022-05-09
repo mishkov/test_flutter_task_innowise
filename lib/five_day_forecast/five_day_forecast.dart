@@ -30,16 +30,20 @@ class FiveDayForecast {
   Future<void> fetch() async {
     const timeoutTime = Duration(seconds: 20);
 
-    final timedWeathers = await _weather
-        .fiveDayForecastByLocation(_latitude, _longitude)
-        .timeout(timeoutTime, onTimeout: () {
-      _forecastStreamController.addError(
-          WeatherTimeoutException(), StackTrace.current);
-      throw WeatherTimeoutException();
-    });
+    try {
+      final timedWeathers = await _weather
+          .fiveDayForecastByLocation(_latitude, _longitude)
+          .timeout(timeoutTime, onTimeout: () {
+        _forecastStreamController.addError(
+            WeatherTimeoutException(), StackTrace.current);
+        throw WeatherTimeoutException();
+      });
 
-    _last = timedWeathers.splitByWeekDay();
-    _forecastStreamController.add(_last!);
+      _last = timedWeathers.splitByWeekDay();
+      _forecastStreamController.add(_last!);
+    } catch (e) {
+      _forecastStreamController.addError(e);
+    }
   }
 
   Future<void> dispose() async {
@@ -71,7 +75,7 @@ extension _ByDaySplitter on List<Weather> {
       final weekDayForecast = this.of(weekDay);
 
       final timedForecast = weekDayForecast.toTimedWeather();
-      DayForecast(weekDay, timedForecast);
+      result.add(DayForecast(weekDay, timedForecast));
     }
 
     return result;

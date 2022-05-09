@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:html';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
@@ -29,19 +28,24 @@ class CoordinateProvider {
   Future<void> fetch() async {
     final timeoutTime = Duration(seconds: 15);
 
-    final locationData = await _location.getLocation().timeout(
-      timeoutTime,
-      onTimeout: () {
-        _coordinateStreamController.addError(LocationGettingTimeoutException());
-        throw LocationGettingTimeoutException();
-      },
-    );
-    _lastCoordinate = Coordinate(
-      locationData.latitude ?? 0,
-      locationData.longitude ?? 0,
-    );
+    try {
+      final locationData = await _location.getLocation().timeout(
+        timeoutTime,
+        onTimeout: () {
+          _coordinateStreamController
+              .addError(LocationGettingTimeoutException());
+          throw LocationGettingTimeoutException();
+        },
+      );
+      _lastCoordinate = Coordinate(
+        locationData.latitude ?? 0,
+        locationData.longitude ?? 0,
+      );
 
-    _coordinateStreamController.add(_lastCoordinate!);
+      _coordinateStreamController.add(_lastCoordinate!);
+    } catch (e) {
+      _coordinateStreamController.addError(e);
+    }
   }
 
   Future<void> dispose() async {

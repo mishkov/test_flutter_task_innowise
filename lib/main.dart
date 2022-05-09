@@ -28,7 +28,8 @@ class MyApp extends StatelessWidget {
 
         if (settings.name == '/weather-details') {
           return MaterialPageRoute(builder: (_) {
-            return DetailWeatherPage(settings.arguments as DayForecast);
+            final today = settings.arguments as DayForecast;
+            return DetailWeatherPage(today);
           });
         }
 
