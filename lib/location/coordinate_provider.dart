@@ -1,11 +1,12 @@
 import 'dart:async';
+import 'dart:html';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
 
 class CoordinateProvider {
-  final _coordinateStreamController = StreamController<Coorinate>.broadcast();
-  Coorinate? _lastCoordinate;
+  final _coordinateStreamController = StreamController<Coordinate>.broadcast();
+  Coordinate? _lastCoordinate;
   final _location = Location();
 
   static final instance = CoordinateProvider._internal();
@@ -21,7 +22,9 @@ class CoordinateProvider {
     }
   }
 
-  Coorinate? get lastCoordinate => _lastCoordinate;
+  Stream<Coordinate> get stream => _coordinateStreamController.stream;
+
+  Coordinate? get lastCoordinate => _lastCoordinate;
 
   Future<void> fetch() async {
     final timeoutTime = Duration(seconds: 15);
@@ -33,7 +36,7 @@ class CoordinateProvider {
         throw LocationGettingTimeoutException();
       },
     );
-    _lastCoordinate = Coorinate(
+    _lastCoordinate = Coordinate(
       locationData.latitude ?? 0,
       locationData.longitude ?? 0,
     );
@@ -46,11 +49,11 @@ class CoordinateProvider {
   }
 }
 
-class Coorinate {
+class Coordinate {
   final double latitude;
   final double longitude;
 
-  Coorinate(this.latitude, this.longitude);
+  Coordinate(this.latitude, this.longitude);
 }
 
 class LocationGettingTimeoutException implements Exception {}
