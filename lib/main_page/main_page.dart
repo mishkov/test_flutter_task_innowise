@@ -66,7 +66,7 @@ class MainPage extends StatelessWidget {
             onPressed: () {
               final dayForecast = state.forecast!.firstWhere((dayForecast) {
                 return dayForecast.weekDay == DateTime.now().weekday;
-              });
+              }, orElse: () => state.forecast!.first);
 
               Navigator.pushNamed(
                 mainPageContext,
