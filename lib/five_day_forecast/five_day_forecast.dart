@@ -11,7 +11,7 @@ class FiveDayForecast {
       StreamController<List<DayForecast>>.broadcast();
   double _latitude = 0.0;
   double _longitude = 0.0;
-  List<DayForecast> _last = [];
+  List<DayForecast>? _last;
 
   static final instance = FiveDayForecast._internal();
 
@@ -21,7 +21,7 @@ class FiveDayForecast {
 
   Stream<List<DayForecast>> get stream => _forecastStreamController.stream;
 
-  List<DayForecast> get last => _last;
+  List<DayForecast>? get last => _last;
 
   set latitude(double latitude) => _latitude = latitude;
 
@@ -39,7 +39,7 @@ class FiveDayForecast {
     });
 
     _last = timedWeathers.splitByWeekDay();
-    _forecastStreamController.add(_last);
+    _forecastStreamController.add(_last!);
   }
 
   Future<void> dispose() async {
