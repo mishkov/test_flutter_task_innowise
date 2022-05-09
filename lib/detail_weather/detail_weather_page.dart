@@ -19,12 +19,12 @@ class DetailWeatherPage extends StatelessWidget {
     final iconUrl = 'http://openweathermap.org/img/w/$icon.png';
     final temp = weather.temperature!.celsius!.round();
 
-    const iconSize = 50.0;
+    const iconSize = 30.0;
     const iconSpace = 20.0;
     const iconColor = Colors.amber;
     const iconTextStyle = TextStyle(
       color: iconColor,
-      fontSize: 20,
+      fontSize: 16,
     );
     return Scaffold(
       appBar: AppBar(
