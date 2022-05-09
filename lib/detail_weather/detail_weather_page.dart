@@ -28,7 +28,9 @@ class DetailWeatherPage extends StatelessWidget {
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text(getDayName(dayForecast.weekDay)),
+        title: Text(
+          '${getDayName(dayForecast.weekDay)} – ${weather.date!.hour}:${weather.date!.minute}',
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
