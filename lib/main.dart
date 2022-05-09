@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:test_flutter_task_innowise/business_logic/cubits/main_page_title_cubit.dart';
+import 'package:test_flutter_task_innowise/five_day_forecast/day_forecast.dart';
 
-import 'business_logic/states/cubit_state.dart';
-import 'ui/day_forecast_view.dart';
-import 'ui/detail_weather_page.dart';
-import 'business_logic/cubits/five_day_forecast_formatted_cubit.dart';
-import 'business_logic/states/five_day_forecast_formatted_state.dart';
-import 'business_logic/states/main_page_title_state.dart';
+import 'main_page/main_page.dart';
+import 'detail_weather/detail_weather_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,122 +21,20 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MainPage(),
-    );
-  }
-}
+      onGenerateRoute: (settings) {
+        if (settings.name == MainPage.routeName) {
+          return MaterialPageRoute(builder: (_) => MainPage());
+        }
 
-class MainPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: BlocProvider(
-          create: (_) => MainPageTitleCubit(),
-          child: BlocBuilder<MainPageTitleCubit, MainPageTitleState>(
-            builder: (_, state) => Text(state.data),
-          ),
-        ),
-      ),
-      body: Center(
-        child: BlocProvider(
-          create: (_) => FiveDayForecastFormattedCubit(),
-          child: BlocBuilder<FiveDayForecastFormattedCubit,
-              FiveDayForecstFormattedState>(
-            builder: (buildContext, state) {
-              if (state.status == Status.done) {
-                return ListView.builder(
-                  physics: ClampingScrollPhysics(),
-                  itemCount: state.data.length,
-                  itemBuilder: (_, index) {
-                    return DayForecastView(state.data[index]);
-                  },
-                );
-              } else if (state.status == Status.loading) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.only(top: 100, bottom: 10),
-                      child: CircularProgressIndicator.adaptive(),
-                    ),
-                    Text(
-                      'Loading...',
-                    ),
-                  ],
-                );
-              } else if (state.status == Status.failed) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(state.errorDetail),
-                    ElevatedButton(
-                      onPressed: () {
-                        buildContext
-                            .read<FiveDayForecastFormattedCubit>()
-                            .tryAgain();
-                      },
-                      child: Text('Try again'),
-                    ),
-                  ],
-                );
-              } else {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Unknown response status.'),
-                    ElevatedButton(
-                      onPressed: () {
-                        buildContext
-                            .read<FiveDayForecastFormattedCubit>()
-                            .tryAgain();
-                      },
-                      child: Text('Try again'),
-                    ),
-                  ],
-                );
-              }
-            },
-          ),
-        ),
-      ),
-      floatingActionButton: BlocProvider(
-        create: (_) => FiveDayForecastFormattedCubit(),
-        child: BlocBuilder<FiveDayForecastFormattedCubit,
-            FiveDayForecstFormattedState>(builder: (_, state) {
-          if (state.status == Status.done) {
-            return ElevatedButton(
-              onPressed: () {
-                final dayForecast = state.data.first;
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return DetailWeatherPage(dayForecast);
-                  }),
-                );
-              },
-              child: Text('Current Weather'),
-            );
-          } else if (state.status == Status.loading) {
-            return ElevatedButton(
-              onPressed: null,
-              child: Text('Loading...'),
-            );
-          } else if (state.status == Status.failed) {
-            return ElevatedButton(
-              onPressed: null,
-              child: Text('Failed'),
-            );
-          } else {
-            return ElevatedButton(
-              onPressed: null,
-              child: Text('Unknown response status!'),
-            );
-          }
-        }),
-      ),
+        if (settings.name == '/weather-details') {
+          return MaterialPageRoute(builder: (_) {
+            final today = settings.arguments as DayForecast;
+            return DetailWeatherPage(today);
+          });
+        }
+
+        return MaterialPageRoute(builder: (context) => MainPage());
+      },
     );
   }
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:test_flutter_task_innowise/business_logic/models/day_forecast.dart';
+import 'package:test_flutter_task_innowise/five_day_forecast/day_forecast.dart';
 
-import 'detail_weather_page.dart';
+import '../get_week_day_name.dart';
+import '../detail_weather/detail_weather_page.dart';
 
 class DayForecastView extends StatelessWidget {
   final DayForecast dayForecast;
@@ -13,11 +14,10 @@ class DayForecastView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Divider(height: 5),
-        Container(
+        Padding(
           padding: EdgeInsets.all(8),
           child: Text(
-            dayForecast.dayName,
+            getDayName(dayForecast.weekDay),
             style: TextStyle(
               fontSize: 25,
             ),
@@ -74,10 +74,10 @@ class DayForecastView extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushNamed(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => DetailWeatherPage(dayForecast)),
+                      DetailWeatherPage.routeName,
+                      arguments: dayForecast,
                     );
                   },
                 ),
@@ -86,7 +86,7 @@ class DayForecastView extends StatelessWidget {
                         height: 2,
                         indent: 80,
                       )
-                    : Container()
+                    : SizedBox.shrink()
               ],
             );
           },
