@@ -38,7 +38,7 @@ class DetailWeatherPage extends StatelessWidget {
           children: [
             Image.network(
               iconUrl,
-              scale: 0.2,
+              scale: 0.5,
               loadingBuilder: (_, child, loadingProgress) {
                 if (loadingProgress == null) {
                   return child;
