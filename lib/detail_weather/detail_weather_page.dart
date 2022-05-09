@@ -70,7 +70,7 @@ class DetailWeatherPage extends StatelessWidget {
               '$temp°C | ${weather.weatherMain}',
               style: TextStyle(
                 color: Colors.blue,
-                fontSize: 30,
+                fontSize: 24,
               ),
             ),
             Divider(
